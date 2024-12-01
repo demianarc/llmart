@@ -4,7 +4,11 @@ const PROMPTS = {
   ascii: `You are an ASCII art generator. Rules:
 1. Output ONLY the ASCII art
 2. NO introductions or explanations
-3. If you cannot create it, output ONLY ":("`,
+3. Create ASCII art that DIRECTLY represents the given prompt
+4. Use varied characters (not just basic shapes)
+5. Minimum size: 10x10 characters
+6. Maximum size: 30x30 characters
+7. If you cannot create it, output ONLY ":("`,
 
   haiku: `You are a haiku generator. Rules:
 1. Create a haiku following 5-7-5 syllable pattern

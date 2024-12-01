@@ -6,14 +6,10 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { AI_MODELS } from '@/lib/models'
 import { Home, Trophy } from 'lucide-react'
-
-type VoteStats = {
-  winner_id: string
-  wins: number
-}
+import { ModelStats } from '@/types'
 
 export default function LeaderboardPage() {
-  const [stats, setStats] = useState<VoteStats[]>([])
+  const [stats, setStats] = useState<ModelStats[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -31,15 +27,13 @@ export default function LeaderboardPage() {
     }
 
     fetchStats()
-    
-    // Set up polling every 5 seconds
     const interval = setInterval(fetchStats, 5000)
     return () => clearInterval(interval)
   }, [])
 
   // Create a lookup for model names
-  const modelNameLookup = Object.fromEntries(
-    AI_MODELS.map(model => [model.id, model.name])
+  const modelLookup = Object.fromEntries(
+    AI_MODELS.map(model => [model.id, model])
   )
 
   return (
@@ -64,27 +58,43 @@ export default function LeaderboardPage() {
               {isLoading ? (
                 <p className="text-neutral-400">Loading stats...</p>
               ) : stats.length === 0 ? (
-                <p className="text-neutral-400">No votes yet</p>
+                <p className="text-neutral-400">No matches yet</p>
               ) : (
                 <div className="space-y-4">
-                  {stats.map((stat, index) => (
-                    <div
-                      key={stat.winner_id}
-                      className="flex items-center gap-4 p-4 rounded-lg bg-neutral-800/50"
-                    >
-                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-700 text-emerald-400 font-bold">
-                        {index + 1}
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-neutral-200 font-medium">
-                          {modelNameLookup[stat.winner_id] || stat.winner_id}
+                  {stats.map((stat, index) => {
+                    const model = modelLookup[stat.model_id]
+                    return (
+                      <div
+                        key={stat.model_id}
+                        className="flex items-center gap-4 p-4 rounded-lg bg-neutral-800/50"
+                      >
+                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-700 text-emerald-400 font-bold">
+                          {index + 1}
                         </div>
-                        <div className="text-sm text-neutral-400">
-                          {stat.wins} {stat.wins === 1 ? 'win' : 'wins'}
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <div className="text-neutral-200 font-medium">
+                              {model?.name || stat.model_id}
+                            </div>
+                            <div className="text-xs text-neutral-500 px-1.5 py-0.5 rounded-full border border-neutral-700">
+                              {model?.provider || 'Unknown'}
+                            </div>
+                          </div>
+                          <div className="text-sm text-neutral-400 mt-1">
+                            <div className="flex items-center gap-2">
+                              <span className="text-emerald-400 font-medium">
+                                {stat.win_rate}% win rate
+                              </span>
+                              <span className="text-neutral-600">•</span>
+                              <span>{stat.wins} wins</span>
+                              <span className="text-neutral-600">•</span>
+                              <span>{stat.total_matches} matches</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               )}
             </CardContent>

@@ -40,18 +40,40 @@ export async function saveVote(
 }
 
 export async function getVoteStats() {
-  try {
-    const result = await sql`
-      SELECT 
-        winner_id,
-        COUNT(*) as wins
-      FROM votes
-      GROUP BY winner_id
-      ORDER BY wins DESC
-    `;
-    return result.rows;
-  } catch (error) {
-    console.error('Database error:', error);
-    return [];
+    try {
+      const result = await sql`
+        WITH model_stats AS (
+          -- Count wins for each model
+          SELECT 
+            winner_id as model_id,
+            COUNT(*) as wins
+          FROM votes
+          GROUP BY winner_id
+        ),
+        model_matches AS (
+          -- Count total matches (both wins and losses) for each model
+          SELECT 
+            model_id,
+            COUNT(*) as total_matches
+          FROM (
+            SELECT winner_id as model_id FROM votes
+            UNION ALL
+            SELECT loser_id as model_id FROM votes
+          ) all_matches
+          GROUP BY model_id
+        )
+        SELECT 
+          m.model_id,
+          COALESCE(s.wins, 0) as wins,
+          m.total_matches,
+          ROUND(COALESCE(s.wins, 0)::numeric / m.total_matches * 100, 1) as win_rate
+        FROM model_matches m
+        LEFT JOIN model_stats s ON m.model_id = s.model_id
+        ORDER BY win_rate DESC, wins DESC
+      `;
+      return result.rows;
+    } catch (error) {
+      console.error('Database error:', error);
+      return [];
+    }
   }
-}

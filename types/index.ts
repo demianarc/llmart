@@ -28,3 +28,10 @@ export type CompetitionState = {
   isGenerating: boolean
 }
 
+export type ModelStats = {
+  model_id: string
+  wins: number
+  total_matches: number
+  win_rate: number
+}
+

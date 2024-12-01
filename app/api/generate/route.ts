@@ -21,16 +21,27 @@ export async function POST(request: Request) {
       })
     }
     
-    const client = modelId.includes('gpt') || modelId.includes('o1') ? openaiClient : nebiusClient
-    completion = await client.chat.completions.create({
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: prompt }
-      ],
-      model: modelId,
-      temperature: 0.7,
-      max_tokens: 1000,
-    })
+    // Handle O1 models differently since they don't support system messages
+    if (modelId.includes('o1')) {
+      completion = await openaiClient.chat.completions.create({
+        messages: [
+          { role: 'user', content: `${systemPrompt}\n\n${prompt}` }
+        ],
+        model: modelId,
+        max_completion_tokens: 2000,
+      })
+    } else {
+      // Handle GPT-4 and Nebius models
+      completion = await (modelId.includes('gpt') ? openaiClient : nebiusClient).chat.completions.create({
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: prompt }
+        ],
+        model: modelId === 'gpt-4o' ? 'gpt-4' : modelId,
+        temperature: 0.7,
+        max_tokens: 1000,
+      })
+    }
 
     return NextResponse.json({ 
       output: completion.choices[0]?.message?.content || 'Failed to generate art.'

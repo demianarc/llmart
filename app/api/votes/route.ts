@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres'
+import { saveVote, getVoteStats } from '@/lib/db'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
@@ -12,13 +12,16 @@ export async function POST(request: Request) {
       )
     }
     
-    const result = await sql`
-      INSERT INTO votes (winner_id, loser_id, creative_type, prompt)
-      VALUES (${winnerId}, ${loserId}, ${creativeType}, ${prompt})
-      RETURNING id
-    `
+    const result = await saveVote(winnerId, loserId, creativeType, prompt)
     
-    return NextResponse.json({ success: true, id: result.rows[0].id })
+    if (!result.success) {
+      return NextResponse.json(
+        { error: result.error },
+        { status: 400 }
+      )
+    }
+    
+    return NextResponse.json({ success: true, id: result.id })
   } catch (error) {
     console.error('Vote API error:', error)
     return NextResponse.json(
@@ -30,15 +33,8 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    const result = await sql`
-      SELECT 
-        winner_id,
-        COUNT(*) as wins
-      FROM votes
-      GROUP BY winner_id
-      ORDER BY wins DESC
-    `
-    return NextResponse.json({ votes: result.rows })
+    const votes = await getVoteStats()
+    return NextResponse.json({ votes })
   } catch (error) {
     console.error('Error fetching votes:', error)
     return NextResponse.json(
