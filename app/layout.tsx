@@ -18,11 +18,6 @@ export const metadata: Metadata = {
   description: 'Watch AI models compete head-to-head in creative challenges',
 }
 
-export const metadata: Metadata = {
-  title: 'Leaderboard | AI Creative Arena',
-  description: 'See which AI models are winning the most creative battles',
-}
-
 export default function RootLayout({
   children,
 }: Readonly<{
