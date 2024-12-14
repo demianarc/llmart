@@ -19,7 +19,11 @@ export async function generateAsciiArt(
     }
 
     const data = await response.json()
-    return data.output
+    const formattedOutput = data.output
+      .split('\n')
+      .map((line: string) => line.trim())
+      .join('\n')
+    return formattedOutput
   } catch (error) {
     console.error('Error generating art:', error)
     return 'Error: Failed to generate art. Please try again.'

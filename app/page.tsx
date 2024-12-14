@@ -123,21 +123,28 @@ export default function Home() {
               />
             </div>
             
-            <div className="grid md:grid-cols-2 gap-4">
-              <ArtDisplay
-                generation={state.modelA}
-                isGenerating={state.isGenerating}
-                side="left"
-              />
-              <ArtDisplay
-                generation={state.modelB}
-                isGenerating={state.isGenerating}
-                side="right"
-              />
-              <VoteButtons
-                onVote={handleVote}
-                disabled={isVotingDisabled}
-              />
+            <div className="md:col-span-2 text-center">
+              {state.modelA?.prompt && (
+                <div className="text-neutral-400 text-sm mb-4">
+                  Prompt: "{state.modelA.prompt}"
+                </div>
+              )}
+              <div className="grid md:grid-cols-2 gap-4">
+                <ArtDisplay
+                  generation={state.modelA}
+                  isGenerating={state.isGenerating}
+                  side="left"
+                />
+                <ArtDisplay
+                  generation={state.modelB}
+                  isGenerating={state.isGenerating}
+                  side="right"
+                />
+                <VoteButtons
+                  onVote={handleVote}
+                  disabled={isVotingDisabled}
+                />
+              </div>
             </div>
           </div>
         </div>

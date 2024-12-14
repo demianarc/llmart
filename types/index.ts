@@ -3,7 +3,11 @@ export const CREATIVE_TYPES = [
   'haiku',
   'quote',
   'joke',
-  'riddle',
+  'asciiEmotion',
+  'recursiveStory',
+  'emojiStory',
+  'codePoetry',
+  'mathMetaphor',
   'proverb'
 ] as const
 
