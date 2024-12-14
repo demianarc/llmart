@@ -126,7 +126,7 @@ export default function Home() {
             <div className="md:col-span-2 text-center">
               {state.modelA?.prompt && (
                 <div className="text-neutral-400 text-sm mb-4">
-                  Prompt: "{state.modelA.prompt}"
+                  Prompt: &ldquo;{state.modelA.prompt}&rdquo;
                 </div>
               )}
               <div className="grid md:grid-cols-2 gap-4">
