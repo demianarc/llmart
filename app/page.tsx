@@ -25,7 +25,12 @@ export default function Home() {
   })
 
   const handlePromptSubmit = async (prompt: string) => {
-    setState(prev => ({ ...prev, isGenerating: true }))
+    // Clear previous results when starting new generation
+    setState({
+      modelA: null,
+      modelB: null,
+      isGenerating: true,
+    })
     
     const [modelA, modelB] = getRandomModels()
     
@@ -74,11 +79,6 @@ export default function Home() {
       }
       
       setLastVoteTime(now)
-      setState({
-        modelA: null,
-        modelB: null,
-        isGenerating: false,
-      })
     } catch (error) {
       console.error('Error saving vote:', error)
     }
@@ -143,6 +143,8 @@ export default function Home() {
                 <VoteButtons
                   onVote={handleVote}
                   disabled={isVotingDisabled}
+                  modelA={state.modelA}
+                  modelB={state.modelB}
                 />
               </div>
             </div>
