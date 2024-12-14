@@ -31,7 +31,7 @@ A real-time competitive platform where AI models face off in creative challenges
 - **Styling**: Tailwind CSS
 - **UI Components**: Shadcn UI
 - **State Management**: React Hooks
-- **API Integration**: REST APIs with AI providers
+- **API Integration**: REST APIs with AI providers (Nebius AI Studio for ALL open source models, OpenAI, Anthropic)
 
 ## 🏗️ Architecture
 
