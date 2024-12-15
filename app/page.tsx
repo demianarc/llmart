@@ -12,6 +12,7 @@ import { CreativeTypeSelector } from '@/components/creative-type-selector'
 import { VoteButtons } from '@/components/vote-buttons'
 import { Button } from '@/components/ui/button'
 import { Trophy } from 'lucide-react'
+import { StartAgainModal } from '@/components/start-again-modal'
 
 const VOTE_COOLDOWN_MS = 2000 // 2 seconds cooldown
 
@@ -23,6 +24,7 @@ export default function Home() {
     modelB: null,
     isGenerating: false,
   })
+  const [isStartAgainOpen, setIsStartAgainOpen] = useState(false)
 
   const handlePromptSubmit = async (prompt: string) => {
     // Clear previous results when starting new generation
@@ -90,6 +92,14 @@ export default function Home() {
     state.isGenerating || 
     (Date.now() - lastVoteTime < VOTE_COOLDOWN_MS)
 
+  const handleStartAgain = () => {
+    setState({
+      modelA: null,
+      modelB: null,
+      isGenerating: false,
+    })
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-900 to-neutral-800">
       <div className="container mx-auto px-4 py-8">
@@ -98,12 +108,23 @@ export default function Home() {
             <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent bg-clip-text">
               AI Creative Arena
             </h1>
-            <Link href="/leaderboard">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Trophy className="w-4 h-4" />
-                View Leaderboard
-              </Button>
-            </Link>
+            <div className="flex gap-2">
+              {(state.modelA || state.modelB) && (
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setIsStartAgainOpen(true)}
+                >
+                  Start Again
+                </Button>
+              )}
+              <Link href="/leaderboard">
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Trophy className="w-4 h-4" />
+                  View Leaderboard
+                </Button>
+              </Link>
+            </div>
           </div>
 
           <div className="space-y-8">
@@ -151,6 +172,12 @@ export default function Home() {
           </div>
         </div>
       </div>
+      
+      <StartAgainModal 
+        isOpen={isStartAgainOpen}
+        onClose={() => setIsStartAgainOpen(false)}
+        onConfirm={handleStartAgain}
+      />
     </main>
   )
 }

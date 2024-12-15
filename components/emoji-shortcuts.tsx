@@ -58,19 +58,19 @@ interface EmojiShortcutsProps {
 }
 
 export function EmojiShortcuts({ onSelect, disabled }: EmojiShortcutsProps) {
+  const emojis = ['🌳', '🌊', '🌙', '🎮', '🎨', '🎭', '🎪', '🎡']
+  
   return (
-    <div className="flex flex-wrap gap-2 justify-center">
-      {EMOJI_OPTIONS.map(({ emoji, label }) => (
-        <Button
+    <div className="flex justify-center gap-2">
+      {emojis.map(emoji => (
+        <button
           key={emoji}
-          variant="ghost"
-          size="sm"
-          onClick={() => onSelect(label)}
+          onClick={() => onSelect(emoji)}
           disabled={disabled}
-          className="text-lg hover:bg-neutral-800"
+          className="text-2xl opacity-70 hover:opacity-100 transition-opacity disabled:opacity-30"
         >
           {emoji}
-        </Button>
+        </button>
       ))}
     </div>
   )
