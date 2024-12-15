@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { CompetitionState, CreativeType } from '@/types'
 import { getRandomModels } from '@/lib/models'
 import { generateAsciiArt } from '@/lib/api-client'
-import { ArtDisplay } from '@/components/art-display'
 import { PromptInput } from '@/components/prompt-input'
 import { EmojiShortcuts } from '@/components/emoji-shortcuts'
 import { CreativeTypeSelector } from '@/components/creative-type-selector'
@@ -13,6 +13,8 @@ import { VoteButtons } from '@/components/vote-buttons'
 import { Button } from '@/components/ui/button'
 import { Trophy } from 'lucide-react'
 import { StartAgainModal } from '@/components/start-again-modal'
+import { ModelCard } from '@/components/model-card'
+import { TextLoop } from '@/components/ui/text-loop'
 
 const VOTE_COOLDOWN_MS = 2000 // 2 seconds cooldown
 
@@ -101,33 +103,39 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-900 to-neutral-800">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-5xl mx-auto space-y-8">
-          <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent bg-clip-text">
-              AI Creative Arena
-            </h1>
-            <div className="flex gap-2">
-              {(state.modelA || state.modelB) && (
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => setIsStartAgainOpen(true)}
+    <main className="min-h-screen relative bg-gradient-to-br from-indigo-500/20 via-fuchsia-500/20 to-emerald-500/20 animate-gradient-x">
+      <div className="container mx-auto px-4 py-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-5xl mx-auto space-y-2"
+        >
+          <div className="min-h-[15vh] flex flex-col items-center justify-center">
+            <div className="w-full flex flex-col items-center mb-3">
+              <h1 className="text-5xl font-bold tracking-tight flex flex-col items-center gap-2">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 whitespace-nowrap">
+                  LLM Arena for...
+                </span>
+                <TextLoop
+                  className="text-5xl font-bold tracking-tight"
+                  interval={3}
+                  containerClassName="flex justify-center items-center"
                 >
-                  Start Again
-                </Button>
-              )}
-              <Link href="/leaderboard">
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Trophy className="w-4 h-4" />
-                  View Leaderboard
-                </Button>
-              </Link>
+                  {["ASCII Art", "haikus", "quotes", "jokes", "stories", "poetry"].map((text) => (
+                    <span key={text}>{text}</span>
+                  ))}
+                </TextLoop>
+              </h1>
             </div>
+            <Link href="/leaderboard">
+              <Button variant="outline" size="sm" className="gap-2">
+                <Trophy className="w-4 h-4" />
+                View Leaderboard
+              </Button>
+            </Link>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-4">
             <div className="space-y-4">
               <CreativeTypeSelector
                 selected={creativeType}
@@ -138,10 +146,23 @@ export default function Home() {
                 onSubmit={handlePromptSubmit}
                 isGenerating={state.isGenerating}
               />
-              <EmojiShortcuts
-                onSelect={handlePromptSubmit}
-                disabled={state.isGenerating}
-              />
+              <div className="space-y-3">
+                <EmojiShortcuts
+                  onSelect={handlePromptSubmit}
+                  disabled={state.isGenerating}
+                />
+                {(state.modelA || state.modelB) && (
+                  <div className="flex justify-center">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setIsStartAgainOpen(true)}
+                      className="bg-gradient-to-r from-emerald-500 via-cyan-500 to-emerald-500 hover:to-emerald-400 border-0 text-white px-8 transition-all duration-300"
+                    >
+                      Start Again
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
             
             <div className="md:col-span-2 text-center">
@@ -151,15 +172,15 @@ export default function Home() {
                 </div>
               )}
               <div className="grid md:grid-cols-2 gap-4">
-                <ArtDisplay
+                <ModelCard
                   generation={state.modelA}
-                  isGenerating={state.isGenerating}
                   side="left"
-                />
-                <ArtDisplay
-                  generation={state.modelB}
                   isGenerating={state.isGenerating}
+                />
+                <ModelCard
+                  generation={state.modelB}
                   side="right"
+                  isGenerating={state.isGenerating}
                 />
                 <VoteButtons
                   onVote={handleVote}
@@ -170,7 +191,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
       
       <StartAgainModal 

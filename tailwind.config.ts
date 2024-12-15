@@ -55,7 +55,36 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+  		animation: {
+  			'gradient-x': 'gradient-x 15s ease infinite',
+  			'gradient-button': 'gradient-button 3s ease infinite',
+  		},
+  		keyframes: {
+  			'gradient-x': {
+  				'0%, 100%': {
+  					'background-size': '400% 400%',
+  					'background-position': 'left center'
+  				},
+  				'50%': {
+  					'background-size': '400% 400%',
+  					'background-position': 'right center'
+  				}
+  			},
+  			'gradient-button': {
+  				'0%, 100%': {
+  					'background-size': '200% 200%',
+  					'background-position': '0% 50%'
+  				},
+  				'50%': {
+  					'background-size': '200% 200%',
+  					'background-position': '100% 50%'
+  				}
+  			}
+  		},
+  		backgroundSize: {
+  			'gradient-size': '400% 400%'
+  		},
   	}
   },
   plugins: [require("tailwindcss-animate")],
