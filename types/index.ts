@@ -4,7 +4,7 @@ export const CREATIVE_TYPES = [
   'quote',
   'joke',
   'asciiEmotion',
-  'recursiveStory',
+  'absurdRecipe',
   'emojiStory',
   'codePoetry',
   'mathMetaphor',
