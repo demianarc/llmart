@@ -49,7 +49,7 @@ export function VoteButtons({ onVote, disabled, modelA, modelB }: VoteButtonsPro
             <span className="text-emerald-400">A:</span> 
             <span>{modelA.model.name}</span>
             <a 
-              href={PROVIDER_LINKS[modelA.model.provider]} 
+              href={PROVIDER_LINKS[modelA.model.provider as keyof typeof PROVIDER_LINKS]} 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-xs text-neutral-600 px-1.5 py-0.5 rounded-full border border-neutral-700 hover:text-neutral-400 transition-colors"
@@ -61,7 +61,7 @@ export function VoteButtons({ onVote, disabled, modelA, modelB }: VoteButtonsPro
             <span className="text-emerald-400">B:</span>
             <span>{modelB.model.name}</span>
             <a 
-              href={PROVIDER_LINKS[modelB.model.provider]} 
+              href={PROVIDER_LINKS[modelB.model.provider as keyof typeof PROVIDER_LINKS]} 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-xs text-neutral-600 px-1.5 py-0.5 rounded-full border border-neutral-700 hover:text-neutral-400 transition-colors"
