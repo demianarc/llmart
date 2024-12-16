@@ -128,7 +128,11 @@ export default function Home() {
               </h1>
             </div>
             <Link href="/leaderboard">
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="gap-2 bg-gradient-to-r from-emerald-500 via-cyan-500 to-emerald-500 hover:to-emerald-400 border-0 text-white transition-all duration-300 hover:scale-105"
+              >
                 <Trophy className="w-4 h-4" />
                 View Leaderboard
               </Button>
