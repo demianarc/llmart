@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { ArtGeneration } from '@/types'
 import { useState, useEffect } from 'react'
+import { PROVIDER_LINKS } from '@/lib/provider-links'
 
 type VoteButtonsProps = {
   onVote: (side: 'left' | 'right') => void
@@ -12,7 +13,6 @@ type VoteButtonsProps = {
 export function VoteButtons({ onVote, disabled, modelA, modelB }: VoteButtonsProps) {
   const [hasVoted, setHasVoted] = useState(false)
 
-  // Reset hasVoted when new models are generated
   useEffect(() => {
     setHasVoted(false)
   }, [modelA?.prompt, modelB?.prompt])
@@ -48,16 +48,26 @@ export function VoteButtons({ onVote, disabled, modelA, modelB }: VoteButtonsPro
           <div className="flex items-center gap-2">
             <span className="text-emerald-400">A:</span> 
             <span>{modelA.model.name}</span>
-            <span className="text-xs text-neutral-600 px-1.5 py-0.5 rounded-full border border-neutral-700">
+            <a 
+              href={PROVIDER_LINKS[modelA.model.provider]} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xs text-neutral-600 px-1.5 py-0.5 rounded-full border border-neutral-700 hover:text-neutral-400 transition-colors"
+            >
               {modelA.model.provider}
-            </span>
+            </a>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-emerald-400">B:</span>
             <span>{modelB.model.name}</span>
-            <span className="text-xs text-neutral-600 px-1.5 py-0.5 rounded-full border border-neutral-700">
+            <a 
+              href={PROVIDER_LINKS[modelB.model.provider]} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xs text-neutral-600 px-1.5 py-0.5 rounded-full border border-neutral-700 hover:text-neutral-400 transition-colors"
+            >
               {modelB.model.provider}
-            </span>
+            </a>
           </div>
         </div>
       )}
