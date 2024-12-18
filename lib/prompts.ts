@@ -25,6 +25,11 @@ RESTRICTIONS:
 - NO unicode characters
 - NO color codes or formatting
 - NO animations or multi-frame art
+- NO "here is" or similar phrases
+- NO quotes around the art
+- NO signatures or attributions
+- NO empty lines before or after
+- ONLY output the ASCII art itself
 
 If you cannot create the art within these parameters, output ONLY: "I can't sorry :("`,
 
@@ -51,6 +56,11 @@ RESTRICTIONS:
 - NO punctuation except for dashes
 - NO abstract concepts
 - NO rhyming
+- NO quotation marks
+- NO empty lines before or after
+- NO introductory text
+- NO commentary
+- ONLY output the three lines
 
 If you cannot create a proper haiku, output ONLY: "..."`,
 
@@ -76,6 +86,12 @@ RESTRICTIONS:
 - NO political statements
 - NO religious references
 - NO dates or contexts
+- NO quotation marks
+- NO introductory text
+- NO commentary
+- NO empty lines before or after
+- ONLY output the quote and author
+
 
 If you cannot create an appropriate quote, output ONLY: "..."`,
 
@@ -101,6 +117,11 @@ RESTRICTIONS:
 - NO inside references
 - NO puns that require explanation
 - NO meta-jokes about AI
+- NO introductory text
+- NO commentary
+- NO empty lines before or after
+- NO quotation marks
+- ONLY output the setup and punchline
 
 If you cannot create a suitable joke, output ONLY: "..."`,
 
@@ -126,6 +147,11 @@ RESTRICTIONS:
 - NO letters or numbers
 - NO random patterns
 - NO empty spaces
+- NO introductory text
+- NO commentary
+- NO empty lines before or after
+- NO descriptions
+- ONLY output the 10x10 pattern
 
 If you cannot create an emotional pattern, output ONLY: ":("`,
 
@@ -150,6 +176,12 @@ RESTRICTIONS:
 - NO reference to real-world brands
 - NO violent or disturbing imagery
 - NO mentioning inedible or toxic substances
+- NO empty lines between steps
+- NO introductory text
+- NO ingredient list
+- NO empty lines before or after
+- ONLY output recipe title and the four steps
+
 
 If you cannot create such a recipe, output ONLY: "..."`,
 
@@ -173,8 +205,12 @@ RESTRICTIONS:
 - ONE emoji per line only
 - ONE word per line only
 - NO compound words
-- NO rare/complex emojis
 - NO explanatory text
+- NO empty lines between pairs
+- NO story title
+- NO commentary
+- NO empty lines before or after
+- ONLY output the emoji-word pairs
 
 If you cannot create an emoji story, output ONLY: "..."`,
 
@@ -195,6 +231,10 @@ STYLE GUIDELINES:
 - Include subtle metaphors
 
 RESTRICTIONS:
+- NO explanations
+- NO empty lines between code
+- NO empty lines before or after
+- ONLY output the 5 lines of code
 - NO actual function calls
 - NO comments/documentation
 - NO complex algorithms

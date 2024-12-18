@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { AI_MODELS } from '@/lib/models'
 import { Home, Trophy } from 'lucide-react'
 import { ModelStats } from '@/types'
-import { PROVIDER_LINKS } from '@/lib/provider-links'
 
 export default function LeaderboardPage() {
   const [stats, setStats] = useState<ModelStats[]>([])
@@ -78,16 +77,7 @@ export default function LeaderboardPage() {
                               {model?.name || stat.model_id}
                             </div>
                             <div className="text-xs text-neutral-500 px-1.5 py-0.5 rounded-full border border-neutral-700">
-                              {model?.provider ? (
-                                <a 
-                                  href={PROVIDER_LINKS[model.provider as keyof typeof PROVIDER_LINKS] || '#'} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="hover:text-neutral-300 transition-colors"
-                                >
-                                  {model.provider}
-                                </a>
-                              ) : 'Unknown'}
+                              {model?.provider || 'Unknown'}
                             </div>
                           </div>
                           <div className="text-sm text-neutral-400 mt-1">
