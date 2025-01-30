@@ -84,6 +84,24 @@ export const AI_MODELS: ArtModel[] = [
     name: 'Claude 3.5 Haiku', 
     provider: 'Anthropic',
     supportedTypes: ['ascii', 'haiku', 'quote', 'joke', 'asciiEmotion', 'absurdRecipe', 'emojiStory', 'codePoetry', 'mathMetaphor', 'proverb']
+  },
+  { 
+    id: 'deepseek-ai/DeepSeek-R1', 
+    name: 'DeepSeek R1', 
+    provider: 'Nebius',
+    supportedTypes: ['ascii', 'haiku', 'quote', 'joke', 'asciiEmotion', 'absurdRecipe', 'emojiStory', 'codePoetry', 'mathMetaphor', 'proverb']
+  },
+  { 
+    id: 'deepseek-ai/DeepSeek-V3', 
+    name: 'DeepSeek V3', 
+    provider: 'Nebius',
+    supportedTypes: ['ascii', 'haiku', 'quote', 'joke', 'asciiEmotion', 'absurdRecipe', 'emojiStory', 'codePoetry', 'mathMetaphor', 'proverb']
+  },
+  { 
+    id: 'Qwen/QwQ-32B-Preview', 
+    name: 'QwQ 32B Preview', 
+    provider: 'Nebius',
+    supportedTypes: ['ascii', 'haiku', 'quote', 'joke', 'asciiEmotion', 'absurdRecipe', 'emojiStory', 'codePoetry', 'mathMetaphor', 'proverb']
   }
 ]
 
